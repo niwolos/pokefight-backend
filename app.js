@@ -27,34 +27,85 @@ app.get("/pokemon", (req, res) => {
   let pokemonDataJson = jsonData;
 
   if (pokemonDataJson) {
-  res.status(404).send(pokemonDataJson);
+    res.status(200).send(pokemonDataJson);
   } else {
-    res.status(404).send("Couldn\'t get all pokemon data!");
-    console.log("Coulnd\'t do something");
+    res.status(404).send("Couldn't get all pokemon data!");
+    console.log("Coulnd't get all pokemon data.");
   }
 });
 
 app.get("/pokemon/:id", (req, res) => {
-    console.log("route /pokemon accessed.");
-    let pokemonDataJson;
-  
-    if (pokemonDataJson) {
+  console.log("route /pokemon accessed.");
+  let allPokemonDataJson = jsonData;
+
+  if (allPokemonDataJson) {
     //TODO: add retrieving and sending of pokemon data of one pokemon by :id
+    //req.params.someParameter
+    const onePokemonById = allPokemonDataJson.find((pokemon) => {
+      if ((pokemon.id = req.params.id)) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if (onePokemonById) {
+      res.status(200).send(onePokemonById);
     } else {
-      res.status(404).send("Couldn\'t get the specified pokemon\'s data!");
+      res.status(404).send("Couldn't get the specified pokemon's data!");
     }
-  });
+  } else {
+    res.status(404).send("Couldn't get the specified pokemon's data!");
+  }
+});
 
-  app.get("/pokemon/:id/:info", (req, res) => {
-    console.log("route /pokemon accessed.");
-    let pokemonDataJson;
-  
-    if (pokemonDataJson) {
+app.get("/pokemon/:id/:info", (req, res) => {
+  console.log("route /pokemon accessed.");
+  let allPokemonDataJson = jsonData;
+
+  if (allPokemonDataJson) {
+    let onePokemonById = allPokemonDataJson.find((pokemon) => {
+      if (pokemon.id == req.params.id) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    let infoParam = req.params.info.toLowerCase();
+    let oneInfoOnlyPokemon = { id: onePokemonById.id };
+    switch (infoParam) {
+      case "name":
+        oneInfoOnlyPokemon.name = onePokemonById.name;
+        break;
+      case "type":
+        oneInfoOnlyPokemon.type = onePokemonById.type;
+        break;
+      case "base":
+        oneInfoOnlyPokemon.base = onePokemonById.base;
+        break;
+      default:
+        infoParam = "invalid";
+        break;
+    }
+    if (!infoParam || infoParam == "invalid") {
+      res
+        .status(400)
+        .send(
+          "Couldn't get the specified pokemon's detailed information & data! Invalid info passed"
+        );
+    } else {
+      res.status(200).send(oneInfoOnlyPokemon);
+      console.log(
+        "Successfully retrieved one pokemon item by ID and INFO param."
+      );
+    }
     //TODO: add retrieving and sending of pokemon data of one pokemon (with info) by :id
-    } else {
-      res.status(404).send("Couldn\'t get the specified pokemon\'s detailed information & data!");
-    }
-  });
-
+  } else {
+    res
+      .status(40)
+      .send(
+        "Couldn't get the specified pokemon's detailed information & data!"
+      );
+  }
+});
 
 module.exports = app;

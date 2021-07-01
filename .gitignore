@@ -59,3 +59,9 @@ typings/
 
 # next.js build output
 .next
+
+# keep heroku build artifacts out
+/node_modules
+npm-debug.log
+.DS_Store
+/*.env
