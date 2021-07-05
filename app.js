@@ -37,13 +37,13 @@ app.get("/pokemon", (req, res) => {
 
 app.get("/pokemon/:id", (req, res) => {
   console.log("route /pokemon accessed.");
-  let allPokemonDataJson = jsonData;
+  const allPokemonDataJson = jsonData;
 
   if (allPokemonDataJson) {
     //TODO: add retrieving and sending of pokemon data of one pokemon by :id
     //req.params.someParameter
     const onePokemonById = allPokemonDataJson.find((pokemon) => {
-      if ((pokemon.id = req.params.id)) {
+      if (pokemon.id === Number(req.params.id)) {
         return true;
       } else {
         return false;
@@ -61,18 +61,18 @@ app.get("/pokemon/:id", (req, res) => {
 
 app.get("/pokemon/:id/:info", (req, res) => {
   console.log("route /pokemon accessed.");
-  let allPokemonDataJson = jsonData;
+  const allPokemonDataJson = jsonData;
 
   if (allPokemonDataJson) {
-    let onePokemonById = allPokemonDataJson.find((pokemon) => {
-      if (pokemon.id == req.params.id) {
+    const onePokemonById = allPokemonDataJson.find((pokemon) => {
+      if (pokemon.id === Number(req.params.id)) {
         return true;
       } else {
         return false;
       }
     });
     let infoParam = req.params.info.toLowerCase();
-    let oneInfoOnlyPokemon = { id: onePokemonById.id };
+    let oneInfoOnlyPokemon = { id: Number(onePokemonById.id) };
     switch (infoParam) {
       case "name":
         oneInfoOnlyPokemon.name = onePokemonById.name;
