@@ -34,6 +34,32 @@ part 2 of the same turn - if pokemon 2 not dead then:
 		#update hp values in UI
 	-combat is logged in text (console) & saved in model with Attacker-speed, Defender-speed, Attack-type, Attack-roll, Defense-roll, Damage-taken
 if both pokemon hp > 0 start next turn
+else if one pokemon hp <= 0 the round ends, number of turns is saved, combat log is saved, winner is output on screen, 
+=>button to SAVE GAME sends the data to backend API
+
+pokemon A & B states (for the 2 selected for fighting pokemon):
+pokemon_A_state {
+	id : number
+	name : string
+  @ health_current : number (initialized from health-max & manipulated during game remember syntax setPokemonA({ ...pokemonA, health_current : e.target.currentHealth }))
+	health_max : number
+	attack_regular : number
+	attack_special : number
+	defense_regular : number
+	defense_special : number
+	speed : number
+  @ image_url : string (initialized getting from some open pokemon AI based on pokemon ID)
+}
+for useEffect reloading on change => [pokemon_A_state.health_current, pokemon_B_state.health_current]
+
+combat_log state 
+JSON array {["game has started!","speed roll event","string"]}
+
+current_turn state
+Number 
+
+game_winner state (initialized as null/undefined, reset to null/undefined when a new game is started)
+JSON Object {"id" : Number, "name": String} (initialized as false, set to true when other pokemon's health reaches 0)
 
 
 once game is over send data to "game/save" in format exactly like gameSchemma
