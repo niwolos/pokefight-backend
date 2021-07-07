@@ -1,0 +1,21 @@
+GET http://localhost:3001
+
+###
+
+POST http://localhost:3001/game/save
+Content-Type: application/json
+
+{
+   "pokemon_1_name": "Nidorina",
+   "pokemon_1_id": 1,
+   "pokemon_2_name": "Rocket",
+   "pokemon_2_id": 2,
+   "game_winner_name": "Nidorina",
+   "game_winner_id": 1,
+   "game_rounds": 3
+} 
+
+###
+
+GET http://localhost:3001/game/leaderboard
+
